@@ -26,7 +26,7 @@ def reviewPR():
 
     feedback = get_review_with_openai(pr.body)
 
-    pr.create_review(body=feedback.choices[0].text, event="COMMENT")
+    pr.create_review(body=feedback, event="COMMENT")
 
 
 if __name__ == "__main__":
