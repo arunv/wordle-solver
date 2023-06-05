@@ -19,7 +19,7 @@ def get_review_with_openai(text):
 def reviewPR():
     repo = g.get_repo(f"{os.getenv('GITHUB_REPOSITORY')}")
     try:
-        pr_number = os.getenv('GITHUB_REF').split('/')[-1]
+        pr_number = os.getenv('GITHUB_REF').split('/')[-2]
         pr = repo.get_pull(int(pr_number))
 
         feedback = get_review_with_openai(pr.body)
