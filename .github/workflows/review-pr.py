@@ -21,15 +21,13 @@ def get_review_with_openai(text):
 
 def reviewPR():
     repo = g.get_repo(f"{os.getenv('GITHUB_REPOSITORY')}")
-    try:
-        pr_number = os.getenv('GITHUB_REF').split('/')[-2]
-        pr = repo.get_pull(int(pr_number))
+    pr_number = os.getenv('GITHUB_REF').split('/')[-2]
+    pr = repo.get_pull(int(pr_number))
 
-        feedback = get_review_with_openai(pr.body)
+    feedback = get_review_with_openai(pr.body)
 
-        pr.create_review(body=feedback.choices[0].text, event="COMMENT")
-    except Exception as e:
-        raise Exception(f"Failed to review PR {os.getenv('GITHUB_REF')}: {e}")
+    pr.create_review(body=feedback.choices[0].text, event="COMMENT")
+
 
 if __name__ == "__main__":
     reviewPR()
