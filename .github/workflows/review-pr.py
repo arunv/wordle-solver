@@ -14,7 +14,10 @@ def get_review_with_openai(text):
             {"role": "user", "content": text},
         ],
     )
-    return response.choices[0].message['content']
+    try:
+        return response.choices[0].message['content']
+    except Exception as e:
+        raise Exception(f"Failed to get review with OpenAI {response}: {e}")
 
 def reviewPR():
     repo = g.get_repo(f"{os.getenv('GITHUB_REPOSITORY')}")
